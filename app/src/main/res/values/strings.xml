@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">MovieLibrary</string>
-    <string name="movie_title_label">Title:</string>
-    <string name="movie_year_label">Year:</string>
-    <string name="movie_director_label">Director:</string>
-    <string name="movie_plot_label">Plot:</string>
+    <string name="movie_title_label">Title: %1$s</string>
+    <string name="movie_year_label">Year: %1$s</string>
+    <string name="movie_director_label">Director: %1$s</string>
+    <string name="movie_plot_label">Plot: %1$s</string>
     <string name="movie_poster_description">Movie poster</string>
     <string name="search_label">Search results for %1$s (%2$s)</string>
+
+    <string name="tab_text_1">Search</string>
+    <string name="tab_text_2">Favorites</string>
 </resources>

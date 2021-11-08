@@ -1,4 +1,4 @@
-package me.sf.movielibrary.viewmodel
+package me.sf.movielibrary.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

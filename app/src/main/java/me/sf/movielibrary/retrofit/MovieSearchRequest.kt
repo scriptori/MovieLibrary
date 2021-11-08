@@ -1,8 +1,9 @@
 package me.sf.movielibrary.retrofit
 
+import me.sf.movielibrary.json.model.Movie
 import me.sf.movielibrary.json.model.MovieSearch
 import me.sf.movielibrary.json.model.MovieSearchResponse
-import me.sf.movielibrary.viewmodel.MovieSearchViewModel
+import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,16 +18,19 @@ class MovieSearchRequest(
     val movieSearchViewModel: MovieSearchViewModel
 ) : SearchRequest<MovieSearch> {
     companion object {
-        const val INITIAL_SEARCH = "2021"
         const val FIRST_PAGE = 1
     }
 
+    var movieCache = mutableListOf<Movie>()
+    override var totalResults: Int? = null
     override var searchCache: MutableList<MovieSearch> = mutableListOf()
     override var currentSearchCriteria: Pair<String, Int> = "" to 1
 
     override fun search(value: Pair<String, Int>) {
         if (value.first != currentSearchCriteria.first) {
             searchCache.clear()
+            movieCache.clear()
+            totalResults = null
         }
         currentSearchCriteria = value
         val retrofit = Retrofit.Builder()
@@ -40,11 +44,15 @@ class MovieSearchRequest(
             value.second.toString()
         )
         call.enqueue(object : Callback<MovieSearchResponse> {
-            override fun onResponse(call: Call<MovieSearchResponse>, searchResponse: Response<MovieSearchResponse>) {
+            override fun onResponse(
+                call: Call<MovieSearchResponse>,
+                searchResponse: Response<MovieSearchResponse>
+            ) {
                 if (searchResponse.code() == 200) {
                     searchResponse.body()?.let { mr ->
+                        mr.movieList.forEach { cacheMovie(it.imdbID) }
                         searchCache.addAll(mr.movieList)
-                        movieSearchViewModel.results.value = searchCache to mr.totalResults
+                        totalResults = mr.totalResults?.toInt()
                     }
                 }
             }
@@ -52,6 +60,37 @@ class MovieSearchRequest(
             override fun onFailure(call: Call<MovieSearchResponse>, t: Throwable) {
                 movieSearchViewModel.results.value = emptyList<MovieSearch>() to null
             }
+        })
+    }
+
+    fun cacheMovie(moveId: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Request.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(MovieService::class.java)
+        val call = service.getMovieData(moveId, Request.API_KEY)
+        call.enqueue(object : Callback<Movie> {
+            override fun onResponse(
+                call: Call<Movie>,
+                searchResponse: Response<Movie>
+            ) {
+                if (searchResponse.code() == 200) {
+                    searchResponse.body()?.let { m ->
+                        movieCache.add(m)
+                        searchCache.find { m.imdbID == it.imdbID }?.apply {
+                            plot = m.plot
+                            director = m.director
+                        }
+                        if (movieCache.size == searchCache.size) {
+                            movieSearchViewModel.results.value =
+                                searchCache to totalResults?.toString()
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Movie>, t: Throwable) {}
         })
     }
 }
