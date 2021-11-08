@@ -19,8 +19,6 @@ class PlaceholderFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var searchViewController: MovieSearchViewController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
@@ -35,7 +33,7 @@ class PlaceholderFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        searchViewController = MovieSearchViewController(this.requireContext())
+        val searchViewController = MovieSearchViewController(this.requireContext())
 
         val fl: FrameLayout = binding.sectionContainer
         pageViewModel.index.observe(viewLifecycleOwner, {

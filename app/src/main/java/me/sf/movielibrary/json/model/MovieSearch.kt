@@ -8,7 +8,7 @@ data class MovieSearch(
     @SerializedName("Year") val year: String,
     @SerializedName("Poster") val poster: String = "",
     @SerializedName("Plot") var plot: String = "",
-    @SerializedName("Director") var director: String = ""
+    @SerializedName("Director") var director: String? = null
 ) {
     var isFavorite: Boolean = false
 }

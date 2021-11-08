@@ -54,6 +54,8 @@ class MovieSearchRequest(
                         searchCache.addAll(mr.movieList)
                         totalResults = mr.totalResults?.toInt()
                     }
+                } else {
+                    movieSearchViewModel.results.value = emptyList<MovieSearch>() to null
                 }
             }
 
