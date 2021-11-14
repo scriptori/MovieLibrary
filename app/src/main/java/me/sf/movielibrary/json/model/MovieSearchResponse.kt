@@ -1,7 +1,7 @@
 package me.sf.movielibrary.json.model
 
 import com.google.gson.annotations.SerializedName
-import me.sf.movielibrary.database.entity.MovieEntity
+import me.sf.movielibrary.database.MovieEntity
 
 class MovieSearchResponse {
     @SerializedName("Search")

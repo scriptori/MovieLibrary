@@ -1,4 +1,4 @@
-package me.sf.movielibrary.database.entity
+package me.sf.movielibrary.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

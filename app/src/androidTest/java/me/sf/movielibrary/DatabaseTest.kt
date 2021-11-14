@@ -11,6 +11,6 @@ class DatabaseTest : InstrumentationTest() {
     fun databaseTest() {
         val repository = (appContext.applicationContext as MovieApplication).repository
         Assert.assertNotNull(repository)
-        repository.allMovies.flowOn(Dispatchers.Main).asLiveData()
+        repository.allMovies.flowOn(Dispatchers.Main).asLiveData().value
     }
 }

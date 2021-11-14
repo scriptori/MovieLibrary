@@ -10,4 +10,7 @@
     <string name="tab_text_1">Search</string>
     <string name="tab_text_2">Favorites</string>
     <string name="favorite_icon">Favorite Icon</string>
+    <string name="favorites_delete_confirmation">Remove favorites?</string>
+    <string name="cancel">Cancel</string>
+    <string name="unfavorite">Unfavorite</string>
 </resources>

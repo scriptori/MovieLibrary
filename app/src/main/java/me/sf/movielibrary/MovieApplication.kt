@@ -4,7 +4,7 @@ import android.app.Application
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import me.sf.movielibrary.database.MovieRoomDatabase
-import me.sf.movielibrary.database.repository.MovieRepository
+import me.sf.movielibrary.database.MovieRepository
 
 class MovieApplication : Application() {
     private val applicationScope = CoroutineScope(SupervisorJob())

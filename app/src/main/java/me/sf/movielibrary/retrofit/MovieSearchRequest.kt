@@ -1,7 +1,7 @@
 package me.sf.movielibrary.retrofit
 
 import java.io.File
-import me.sf.movielibrary.database.entity.MovieEntity
+import me.sf.movielibrary.database.MovieEntity
 import me.sf.movielibrary.json.model.Movie
 import me.sf.movielibrary.json.model.MovieSearchResponse
 import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel

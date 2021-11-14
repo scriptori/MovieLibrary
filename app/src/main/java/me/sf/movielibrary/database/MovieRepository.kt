@@ -1,9 +1,7 @@
-package me.sf.movielibrary.database.repository
+package me.sf.movielibrary.database
 
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
-import me.sf.movielibrary.database.dao.MovieDao
-import me.sf.movielibrary.database.entity.MovieEntity
 
 /**
  * The movie repository

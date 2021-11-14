@@ -1,4 +1,4 @@
-package me.sf.movielibrary.database.dao
+package me.sf.movielibrary.database
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import me.sf.movielibrary.database.entity.MovieEntity
 
 @Dao
 interface MovieDao {

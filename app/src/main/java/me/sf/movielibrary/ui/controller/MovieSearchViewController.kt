@@ -15,23 +15,23 @@ import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel
 @SuppressLint("NotifyDataSetChanged", "ClickableViewAccessibility")
 class MovieSearchViewController(
     context: Context,
-    viewLifecycleOwner: LifecycleOwner
+    viewLifecycleOwner: LifecycleOwner,
+    movieSearchViewModel: MovieSearchViewModel
 ) {
 
     var binding = MovieSearchViewBinding.inflate(LayoutInflater.from(context), null, false)
     private var movieSearchViewAdapter = MovieSearchViewAdapter(emptyList())
-    private val movieSearchViewModel = MovieSearchViewModel()
     private val movieSearchRequest = MovieSearchRequest(movieSearchViewModel)
 
     private var currentCount: String? = null
 
     init {
-        movieSearchViewModel.results.observeForever { s ->
+        movieSearchViewModel.results.observe(viewLifecycleOwner) { s ->
             currentCount = s.second
             movieSearchViewAdapter.movieList = s.first
             movieSearchViewAdapter.notifyDataSetChanged()
             binding.searchView.isEnabled = true
-            binding.searchLabel.text = ""
+            binding.searchLabel.text = currentCount
         }
 
         binding.searchView.apply {

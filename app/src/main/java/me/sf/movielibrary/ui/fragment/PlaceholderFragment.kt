@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import me.sf.movielibrary.MovieApplication
+import me.sf.movielibrary.database.MovieRepository
+import me.sf.movielibrary.database.MoviesViewModel
 import me.sf.movielibrary.ui.controller.MovieSearchViewController
 import me.sf.movielibrary.databinding.FragmentMainBinding
 import me.sf.movielibrary.ui.controller.FavoritesMovieViewController
+import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel
 import me.sf.movielibrary.ui.viewmodel.PageViewModel
 
 /**
@@ -19,12 +23,26 @@ class PlaceholderFragment : Fragment() {
     private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+    private val movieSearchViewModel = MovieSearchViewModel()
+    private lateinit var repository: MovieRepository
+    private lateinit var moviesViewModel: MoviesViewModel
+
+    init {
+        movieSearchViewModel.results.observe(this) { r ->
+            moviesViewModel.deleteAll()
+            r.first.filter { it.isFavorite }.forEach { m ->
+                moviesViewModel.insert(m)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             index.value = (arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
+        repository = (requireActivity().application as MovieApplication).repository
+        moviesViewModel = MoviesViewModel(repository)
     }
 
     override fun onCreateView(
@@ -36,11 +54,13 @@ class PlaceholderFragment : Fragment() {
 
         val searchViewController = MovieSearchViewController(
             this.requireContext(),
-            viewLifecycleOwner
+            viewLifecycleOwner,
+            movieSearchViewModel
         )
         val favoritesMovieViewController = FavoritesMovieViewController(
             this.requireContext(),
-            viewLifecycleOwner
+            viewLifecycleOwner,
+            moviesViewModel
         )
 
         val fl: FrameLayout = binding.sectionContainer

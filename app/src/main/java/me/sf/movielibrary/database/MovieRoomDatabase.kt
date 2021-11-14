@@ -7,8 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.sf.movielibrary.database.dao.MovieDao
-import me.sf.movielibrary.database.entity.MovieEntity
 
 // TODO: set a directory for room to use to export the schema, and set exportSchema to true
 @Database(entities = [MovieEntity::class], version = 1, exportSchema = false)
