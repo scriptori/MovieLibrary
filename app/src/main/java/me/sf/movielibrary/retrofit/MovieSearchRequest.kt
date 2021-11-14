@@ -1,9 +1,11 @@
 package me.sf.movielibrary.retrofit
 
+import java.io.File
+import me.sf.movielibrary.database.entity.MovieEntity
 import me.sf.movielibrary.json.model.Movie
-import me.sf.movielibrary.json.model.MovieSearch
 import me.sf.movielibrary.json.model.MovieSearchResponse
 import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel
+import me.sf.movielibrary.util.JsonUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,14 +18,14 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class MovieSearchRequest(
     val movieSearchViewModel: MovieSearchViewModel
-) : SearchRequest<MovieSearch> {
+) : SearchRequest<MovieEntity> {
     companion object {
         const val FIRST_PAGE = 1
     }
 
     var movieCache = mutableListOf<Movie>()
     override var totalResults: Int? = null
-    override var searchCache: MutableList<MovieSearch> = mutableListOf()
+    override var searchCache: MutableList<MovieEntity> = mutableListOf()
     override var currentSearchCriteria: Pair<String, Int> = "" to 1
 
     override fun search(value: Pair<String, Int>) {
@@ -55,12 +57,16 @@ class MovieSearchRequest(
                         totalResults = mr.totalResults?.toInt()
                     }
                 } else {
-                    movieSearchViewModel.results.value = emptyList<MovieSearch>() to null
+                    val msr = JsonUtil.fromJsonFile(File(
+                        "src/test/assets/search.json"),
+                        MovieSearchResponse::class.java
+                    )
+                    movieSearchViewModel.results.value = msr.movieList to msr.totalResults
                 }
             }
 
             override fun onFailure(call: Call<MovieSearchResponse>, t: Throwable) {
-                movieSearchViewModel.results.value = emptyList<MovieSearch>() to null
+                movieSearchViewModel.results.value = emptyList<MovieEntity>() to null
             }
         })
     }
@@ -89,6 +95,12 @@ class MovieSearchRequest(
                                 searchCache to totalResults?.toString()
                         }
                     }
+                } else {
+                    JsonUtil.fromJsonFile(
+                        File(
+                        "src/test/assets/movie.json"),
+                        Movie::class.java
+                    )
                 }
             }
 

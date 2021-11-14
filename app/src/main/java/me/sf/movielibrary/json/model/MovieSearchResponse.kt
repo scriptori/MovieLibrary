@@ -1,10 +1,11 @@
 package me.sf.movielibrary.json.model
 
 import com.google.gson.annotations.SerializedName
+import me.sf.movielibrary.database.entity.MovieEntity
 
 class MovieSearchResponse {
     @SerializedName("Search")
-    val movieList: List<MovieSearch> = emptyList()
+    val movieList: List<MovieEntity> = emptyList()
     @SerializedName("totalResults")
     val totalResults: String? = null
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import me.sf.movielibrary.ui.controller.MovieSearchViewController
 import me.sf.movielibrary.databinding.FragmentMainBinding
+import me.sf.movielibrary.ui.controller.FavoritesMovieViewController
 import me.sf.movielibrary.ui.viewmodel.PageViewModel
 
 /**
@@ -33,13 +34,21 @@ class PlaceholderFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        val searchViewController = MovieSearchViewController(this.requireContext())
+        val searchViewController = MovieSearchViewController(
+            this.requireContext(),
+            viewLifecycleOwner
+        )
+        val favoritesMovieViewController = FavoritesMovieViewController(
+            this.requireContext(),
+            viewLifecycleOwner
+        )
 
         val fl: FrameLayout = binding.sectionContainer
         pageViewModel.index.observe(viewLifecycleOwner, {
             var view: View? = null
             when (it) {
                 1 -> view = searchViewController.binding.root
+                2 -> view = favoritesMovieViewController.binding.root
             }
             fl.removeAllViews()
             view?.let {

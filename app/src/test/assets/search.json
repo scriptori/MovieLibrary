@@ -1,0 +1,76 @@
+{
+  "Search": [
+    {
+      "Title": "Batman: Hush",
+      "Year": "2019",
+      "imdbID": "tt8752440",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYWY5ODhlMWQtNDRiMC00MDk0LTgyMDItYmRmYWFkMjdmYWFmXkEyXkFqcGdeQXVyNTA4NzExMDg@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Batman & Mr. Freeze: SubZero",
+      "Year": "1998",
+      "imdbID": "tt0143127",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BOTQ0NmUzMzAtODk5My00MzYwLThlYWEtY2NkOGNhODg5ZmY1XkEyXkFqcGdeQXVyNjExODE1MDc@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Batman Begins",
+      "Year": "2005",
+      "imdbID": "tt0450392",
+      "Type": "game",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYWRkMGNjYmQtMTJlMi00ODgyLWIyZGEtOTZkY2FlZWI3NzIwXkEyXkFqcGdeQXVyNDEyNjEzOTg@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Batman and Harley Quinn",
+      "Year": "2017",
+      "imdbID": "tt6556890",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNTQzM2JkYTAtY2ExNi00N2ZhLWE5NDctMDQyMWU5ZjcwZDEwXkEyXkFqcGdeQXVyMjM5NDQzNTk@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Batman: Arkham Origins",
+      "Year": "2013",
+      "imdbID": "tt2842418",
+      "Type": "game",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMzczNTkxODU5NF5BMl5BanBnXkFtZTgwNDcwMzU1MDE@._V1_SX300.jpg"
+    },
+    {
+      "Title": "Batman: Mystery of the Batwoman",
+      "Year": "2003",
+      "imdbID": "tt0346578",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BN2IwYTVlZGQtOTRhNy00MDI5LThmMTUtYWI1MGUwMGFkYzI1XkEyXkFqcGdeQXVyNzQzNzQxNzI@._V1_SX300.jpg"
+    },
+    {
+      "Title": "The Batman",
+      "Year": "2004–2008",
+      "imdbID": "tt0398417",
+      "Type": "series",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYzRjOWY2YWUtOTM4Yy00ODE3LThlNzAtN2YxMWUzOGQ1MTMxXkEyXkFqcGdeQXVyMTEyNzgwMDUw._V1_SX300.jpg"
+    },
+    {
+      "Title": "Batman vs Teenage Mutant Ninja Turtles",
+      "Year": "2019",
+      "imdbID": "tt9775360",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNzk3MGZlYWQtNDU4Ny00Y2I5LTk2YmItM2QxYjFiMjM0ZmQxXkEyXkFqcGdeQXVyNDUzMTkzMDI@._V1_SX300.jpg"
+    },
+    {
+      "Title": "The Batman vs. Dracula",
+      "Year": "2005",
+      "imdbID": "tt0472219",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMTkyMTMwNjA3MV5BMl5BanBnXkFtZTcwNzE2NTI2OQ@@._V1_SX300.jpg"
+    },
+    {
+      "Title": "The Batman Superman Movie: World's Finest",
+      "Year": "1997",
+      "imdbID": "tt0169590",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYzk0MTI0YmUtMDgwOC00M2U5LTgzMDktM2RhN2M3ZDVmOWFiXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"
+    }
+  ],
+  "totalResults": "470",
+  "Response": "True"
+}

@@ -1,0 +1,29 @@
+{
+  "Title": "A Series of Unfortunate Events",
+  "Year": "2017–2019",
+  "Rated": "TV-PG",
+  "Released": "13 Jan 2017",
+  "Runtime": "50 min",
+  "Genre": "Adventure, Comedy, Drama",
+  "Director": "N/A",
+  "Writer": "N/A",
+  "Actors": "Neil Patrick Harris, Patrick Warburton, Malina Weissman",
+  "Plot": "After the loss of their parents in a mysterious fire, the three Baudelaire children face trials and tribulations attempting to uncover dark family secrets.",
+  "Language": "English",
+  "Country": "United States",
+  "Awards": "Nominated for 6 Primetime Emmys. 19 wins & 45 nominations total",
+  "Poster": "https://m.media-amazon.com/images/M/MV5BMTYzMjA3OTgxOV5BMl5BanBnXkFtZTgwMjAwMDU5NjM@._V1_SX300.jpg",
+  "Ratings": [
+    {
+      "Source": "Internet Movie Database",
+      "Value": "7.8/10"
+    }
+  ],
+  "Metascore": "N/A",
+  "imdbRating": "7.8",
+  "imdbVotes": "56,983",
+  "imdbID": "tt4834206",
+  "Type": "series",
+  "totalSeasons": "3",
+  "Response": "True"
+}

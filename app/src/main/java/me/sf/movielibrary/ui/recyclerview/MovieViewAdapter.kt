@@ -8,9 +8,9 @@ import me.sf.movielibrary.R
 import me.sf.movielibrary.database.entity.MovieEntity
 import me.sf.movielibrary.databinding.RecyclerviewItemBinding
 
-class MovieSearchViewAdapter(
+class MovieViewAdapter(
     internal var movieList: List<MovieEntity>
-) : RecyclerView.Adapter<MovieSearchViewAdapter.MovieSearchViewHolder>() {
+) : RecyclerView.Adapter<MovieViewAdapter.MovieSearchViewHolder>() {
     companion object {
         private const val NA = "N/A"
     }

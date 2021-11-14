@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.sf.movielibrary.databinding.MovieSearchViewBinding
@@ -12,11 +13,13 @@ import me.sf.movielibrary.ui.recyclerview.MovieSearchViewAdapter
 import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel
 
 @SuppressLint("NotifyDataSetChanged", "ClickableViewAccessibility")
-class MovieSearchViewController(context: Context) {
+class MovieSearchViewController(
+    context: Context,
+    viewLifecycleOwner: LifecycleOwner
+) {
 
-    var binding: MovieSearchViewBinding =
-        MovieSearchViewBinding.inflate(LayoutInflater.from(context), null, false)
-    private var movieSearchViewAdapter: MovieSearchViewAdapter = MovieSearchViewAdapter(emptyList())
+    var binding = MovieSearchViewBinding.inflate(LayoutInflater.from(context), null, false)
+    private var movieSearchViewAdapter = MovieSearchViewAdapter(emptyList())
     private val movieSearchViewModel = MovieSearchViewModel()
     private val movieSearchRequest = MovieSearchRequest(movieSearchViewModel)
 
