@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * @param movieDao - The movie DAO
  */
 class MovieRepository(private val movieDao: MovieDao) {
-    val allMovies: Flow<List<MovieEntity>> = movieDao.getMovies()
+    val allMovies: Flow<MutableList<MovieEntity>> = movieDao.getMovies()
 
     @WorkerThread
     suspend fun insert(movieEntity: MovieEntity) {

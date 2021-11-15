@@ -10,11 +10,17 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
+    @Query("SELECT * FROM movie_table WHERE imdbID = :imdbID")
+    fun get(imdbID: String): MovieEntity
+
     /**
      * Execute this query on a separate thread and notify the observer when the data has changed
      */
     @Query("SELECT * FROM movie_table ORDER BY title ASC")
-    fun getMovies(): Flow<List<MovieEntity>>
+    fun getMovies(): Flow<MutableList<MovieEntity>>
+
+    @Query("SELECT * FROM movie_table where is_favorite = 1")
+    fun getFavorites(): Flow<MutableList<MovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movieEntity: MovieEntity)

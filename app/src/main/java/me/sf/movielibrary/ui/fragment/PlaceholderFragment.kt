@@ -1,48 +1,39 @@
 package me.sf.movielibrary.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import me.sf.movielibrary.MovieApplication
-import me.sf.movielibrary.database.MovieRepository
+import androidx.recyclerview.widget.LinearLayoutManager
 import me.sf.movielibrary.database.MoviesViewModel
-import me.sf.movielibrary.ui.controller.MovieSearchViewController
 import me.sf.movielibrary.databinding.FragmentMainBinding
-import me.sf.movielibrary.ui.controller.FavoritesMovieViewController
+import me.sf.movielibrary.databinding.MovieFavoritesViewBinding
+import me.sf.movielibrary.databinding.MovieSearchViewBinding
+import me.sf.movielibrary.retrofit.MovieSearchRequest
+import me.sf.movielibrary.ui.recyclerview.MovieSearchViewAdapter
+import me.sf.movielibrary.ui.recyclerview.MovieViewAdapter
 import me.sf.movielibrary.ui.viewmodel.MovieSearchViewModel
 import me.sf.movielibrary.ui.viewmodel.PageViewModel
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class PlaceholderFragment : Fragment() {
+class PlaceholderFragment(private val moviesViewModel: MoviesViewModel) : Fragment() {
     private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val movieSearchViewModel = MovieSearchViewModel()
-    private lateinit var repository: MovieRepository
-    private lateinit var moviesViewModel: MoviesViewModel
-
-    init {
-        movieSearchViewModel.results.observe(this) { r ->
-            moviesViewModel.deleteAll()
-            r.first.filter { it.isFavorite }.forEach { m ->
-                moviesViewModel.insert(m)
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             index.value = (arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
-        repository = (requireActivity().application as MovieApplication).repository
-        moviesViewModel = MoviesViewModel(repository)
     }
 
     override fun onCreateView(
@@ -52,23 +43,12 @@ class PlaceholderFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        val searchViewController = MovieSearchViewController(
-            this.requireContext(),
-            viewLifecycleOwner,
-            movieSearchViewModel
-        )
-        val favoritesMovieViewController = FavoritesMovieViewController(
-            this.requireContext(),
-            viewLifecycleOwner,
-            moviesViewModel
-        )
-
         val fl: FrameLayout = binding.sectionContainer
         pageViewModel.index.observe(viewLifecycleOwner, {
             var view: View? = null
             when (it) {
-                1 -> view = searchViewController.binding.root
-                2 -> view = favoritesMovieViewController.binding.root
+                1 -> view = getMovieSearchView()
+                2 -> view = getFavoritesView()
             }
             fl.removeAllViews()
             view?.let {
@@ -76,6 +56,62 @@ class PlaceholderFragment : Fragment() {
             }
         })
         return root
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getFavoritesView(): View {
+        val binding = MovieFavoritesViewBinding.inflate(
+            LayoutInflater.from(context),
+            null,
+            false
+        )
+        binding.favoritesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = MovieViewAdapter(moviesViewModel).also {
+                moviesViewModel.movies.observeForever { ms ->
+                    it.movieList.clear()
+                    it.movieList.addAll(ms)
+                    it.notifyDataSetChanged()
+                }
+            }
+        }
+        return binding.root
+    }
+
+    private fun getMovieSearchView(): View {
+        val binding = MovieSearchViewBinding.inflate(
+            LayoutInflater.from(context),
+            null,
+            false
+        )
+        val movieSearchRequest = MovieSearchRequest(movieSearchViewModel)
+        binding.searchView.apply {
+            // Adding text change listener to fetch the new query
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    binding.searchLabel.text = ""
+                    if (query.isNotEmpty()) {
+                        movieSearchRequest.search(query to MovieSearchRequest.FIRST_PAGE)
+                        binding.searchView.isEnabled = false
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    return false
+                }
+            })
+        }
+        binding.searchRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = MovieSearchViewAdapter(moviesViewModel).also {
+                movieSearchViewModel.results.observeForever { s ->
+                    it.refreshData(s)
+                }
+            }
+        }
+
+        return binding.root
     }
 
     companion object {
@@ -90,8 +126,8 @@ class PlaceholderFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): PlaceholderFragment {
-            return PlaceholderFragment().apply {
+        fun newInstance(moviesViewModel: MoviesViewModel, sectionNumber: Int): PlaceholderFragment {
+            return PlaceholderFragment(moviesViewModel).apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, sectionNumber)
                 }

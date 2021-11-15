@@ -11,12 +11,15 @@ import kotlinx.coroutines.launch
 class MoviesViewModel(
     private val repository: MovieRepository
 ) : ViewModel() {
-    val allMovies: LiveData<List<MovieEntity>>
+    val movies: LiveData<MutableList<MovieEntity>>
         get() = repository.allMovies.flowOn((Dispatchers.Main)).asLiveData(
             viewModelScope.coroutineContext
         )
+
     fun insert(movie: MovieEntity) {
-        viewModelScope.launch { repository.insert(movie) }
+        viewModelScope.launch {
+            repository.insert(movie)
+        }
     }
 
     fun update(movie: MovieEntity) {

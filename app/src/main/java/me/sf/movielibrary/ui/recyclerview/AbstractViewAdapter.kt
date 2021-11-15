@@ -15,7 +15,7 @@ abstract class AbstractViewAdapter :
         private const val NA = "N/A"
     }
 
-    abstract val movieList: List<MovieEntity>
+    abstract val movieList: MutableList<MovieEntity>
 
     internal lateinit var context: Context
     internal lateinit var resources: Resources
@@ -38,7 +38,8 @@ abstract class AbstractViewAdapter :
                 R.string.movie_director_label,
                 movieSearch.director ?: NA
             )
-            plot.text = resources.getString(R.string.movie_plot_label, movieSearch.plot
+            plot.text = resources.getString(
+                R.string.movie_plot_label, movieSearch.plot
             )
             poster.setImageURI(movieSearch.poster)
         }
