@@ -25,19 +25,21 @@ import me.sf.movielibrary.ui.viewmodel.PageViewModel
  */
 class PlaceholderFragment(private val moviesViewModel: MoviesViewModel) : Fragment() {
     private lateinit var pageViewModel: PageViewModel
+    private lateinit var movieSearchViewModel: MovieSearchViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private val movieSearchViewModel = MovieSearchViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
-            index.value = (arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
+        movieSearchViewModel = ViewModelProvider(this)[MovieSearchViewModel::class.java]
+        pageViewModel = ViewModelProvider(this)[PageViewModel::class.java].apply {
+            changeValue(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)

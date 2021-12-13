@@ -51,7 +51,7 @@ class MovieSearchRequest(
             }
 
             override fun onFailure(call: Call<MovieSearchResponse>, t: Throwable) {
-                movieSearchViewModel.results.value = emptyList<MovieEntity>() to null
+                movieSearchViewModel.changeValue(emptyList<MovieEntity>() to null)
             }
         })
     }
@@ -77,7 +77,7 @@ class MovieSearchRequest(
                             me.director = m.director
                         }
                         if (movieCache.size == movies.size) {
-                            movieSearchViewModel.results.value = movies to totalResults
+                            movieSearchViewModel.changeValue(movies to totalResults)
                         }
                     }
                 }
